@@ -1,11 +1,12 @@
 import './styles.css';
+import { App } from './ui/App';
 
-const app = document.getElementById('app');
+const root = document.getElementById('app');
 
-if (!app) {
+if (!root) {
   throw new Error('Root element #app not found');
 }
 
-const heading = document.createElement('h1');
-heading.textContent = 'Hello, World!';
-app.appendChild(heading);
+const app = new App();
+app.init();
+root.appendChild(app.root);

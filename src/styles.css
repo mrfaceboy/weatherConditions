@@ -4,7 +4,17 @@ body {
 }
 
 #app {
-  max-width: 720px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
+
+.locationinputs{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.inputPoint{
+  margin:5px 0
+}
+
