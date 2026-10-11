@@ -1,0 +1,25 @@
+# Weather Conditions
+
+A small TypeScript web app that shows the current weather for a city, ZIP code, or set of coordinates, using the OpenWeatherMap API. It's bundled with webpack and served by nginx in a Docker container.
+
+## Running locally
+
+```sh
+make install   # install npm dependencies
+make dev       # dev server at http://localhost:8080
+```
+
+## Deployment
+
+The app runs on a private Docker network that can only be reached through a WireGuard VPN, at http://weather.internal. Start everything with `make up`, then import the generated VPN config into your WireGuard client. Run `make help` to see all targets.
+
+The [deployment guide](deploy/README.md) covers the architecture, setup steps, verification, and troubleshooting.
+
+### Where I used AI
+
+As I have not built an app from scratch in quite some time. I used AI to help me setup the initial app and getting the required inports to get the basic app running. I then wrote the majority of the code myself with a few exceptions:
+
+1. Some google AI powered searching for some basic functionality and nuances
+2. Some CSS updates as I wanted a specific formatting and wanted to see if it has some good suggestions.
+3. The openWeatherMap current api (4.0) requires a creditcard entry for the subscription to use. it is free for 1000 calls which I would not susspect ever hitting, but still feels strange of a requirement. I hade Claude help me find an ealier version (2.5) that did not require a subscription to hit the api
+4. setting up the vpn and build proccess. I have n

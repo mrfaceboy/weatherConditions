@@ -147,3 +147,6 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Generated WireGuard keys and peer configs (contain private keys)
+deploy/wireguard/

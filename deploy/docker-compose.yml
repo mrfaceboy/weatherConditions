@@ -1,0 +1,62 @@
+# Private network environment for the weather app.
+#
+#   private (10.200.0.0/24, internal: no route in or out)
+#     ├── web        nginx serving the app at 10.200.0.10 / weather.internal
+#     └── vpn        WireGuard gateway, also attached to `edge`
+#   edge (normal bridge)
+#     └── vpn        the only published port: 51820/udp
+#
+# The web container publishes no ports and its network has no gateway, so the
+# only path to it is through the WireGuard tunnel. The name weather.internal
+# exists only in Docker's internal DNS, which VPN clients reach through the
+# gateway's CoreDNS (10.13.13.1). Outside the tunnel the name is NXDOMAIN.
+
+name: weather
+
+services:
+  web:
+    build:
+      context: ..
+    restart: unless-stopped
+    networks:
+      private:
+        ipv4_address: 10.200.0.10
+        aliases:
+          - weather.internal
+
+  vpn:
+    image: lscr.io/linuxserver/wireguard:1.0.20250521
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TZ=Etc/UTC
+      # Address clients use to reach this gateway. Override with
+      # `make up SERVERURL=<lan-ip>` to connect from another machine.
+      - SERVERURL=${SERVERURL:-127.0.0.1}
+      - SERVERPORT=51820
+      # `reviewer` is for people; `verify` is used by deploy/verify.sh.
+      - PEERS=reviewer,verify
+      # Tunnel IP of the gateway, where CoreDNS answers client queries.
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      # Split tunnel: only VPN and private-network traffic goes through it.
+      - ALLOWEDIPS=10.13.13.0/24,10.200.0.0/24
+    volumes:
+      # `make up` seeds templates/peer.conf from deploy/peer.conf.template.
+      - ./wireguard:/config
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - edge
+      - private
+
+networks:
+  private:
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.200.0.0/24
+  edge: {}
