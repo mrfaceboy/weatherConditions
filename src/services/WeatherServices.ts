@@ -54,7 +54,7 @@ export class WeatherServices{
     }
 
     static async getCurrentWeather(lon:number, lat:number):Promise<WeatherData | null>{
-        let url = `${ServicesUrls.WEATHER_DATA}?lat=${lat}&lon=${lon}&appid=${WeatherServices.APIKEY}`;
+        let url = `${ServicesUrls.WEATHER_DATA}?lat=${lat}&lon=${lon}&appid=${WeatherServices.APIKEY}&units=imperial`;
         try{
             let response = await fetch(url);
             if(response.ok){
