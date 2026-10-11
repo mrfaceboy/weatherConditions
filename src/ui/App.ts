@@ -31,7 +31,6 @@ export class App extends RenderComponent implements IInputDeligate{
         for(let input of this.inputs){
             input.sendButton.disabled = false;
         }
-        console.log(data);
         for(let dataKey in data){
             if(data[dataKey] == null) continue;
             else{
