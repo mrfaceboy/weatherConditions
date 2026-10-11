@@ -22,4 +22,4 @@ As I have not built an app from scratch in quite some time. I used AI to help me
 1. Some google AI powered searching for some basic functionality and nuances
 2. Some CSS updates as I wanted a specific formatting and wanted to see if it has some good suggestions.
 3. The openWeatherMap current api (4.0) requires a creditcard entry for the subscription to use. it is free for 1000 calls which I would not susspect ever hitting, but still feels strange of a requirement. I hade Claude help me find an ealier version (2.5) that did not require a subscription to hit the api
-4. setting up the vpn and build proccess. I have n
+4. setting up the vpn and build proccess. I have never setup one from scratch before. I wanted to be sure to make it as clean and free as possibly, so I had claude give me options, and then setup the one that best fit the criteria for the task. Made for some interesting build flow.
